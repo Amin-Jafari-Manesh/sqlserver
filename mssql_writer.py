@@ -36,8 +36,11 @@ def test_mssql_connection():
         logging.info("Successfully connected to sql server.")
         cur = conn.cursor()
         cur.execute("CREATE DATABASE test;")
+        conn.commit()
         cur.execute("USE test;")
+        conn.commit()
         cur.execute("CREATE TABLE hashes (id serial PRIMARY KEY, hash TEXT, created_at TIMESTAMP);")
+        conn.commit()
         conn.close()
         return True
     except Exception as e:
@@ -55,6 +58,7 @@ def mssql_write_hash(size: int = 100) -> bool:
         )
         cur = conn.cursor()
         cur.execute("USE test;")
+        conn.commit()
         for _ in range(size):
             cur.execute(
                 f"INSERT INTO hashes (hash, created_at) VALUES ('{generate_random_hash(db_config['HASH_SIZE'])}', '{datetime.now()}')")
