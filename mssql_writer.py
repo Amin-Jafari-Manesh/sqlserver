@@ -28,7 +28,11 @@ def generate_random_hash(numb: int = 1) -> str:
 def test_mssql_connection():
     try:
         conn = pyodbc.connect(
-            f"DRIVER={{Devart ODBC Driver for SQL Server}};SERVER={db_config['DOMAIN']};DATABASE=db;Port=1433;User ID=sa;Password={db_config['PASS']}"
+            'DRIVER={ODBC Driver 17 for SQL Server};'
+            f'SERVER={db_config["DOMAIN"]};'
+            'DATABASE=your_database_name;'
+            'UID=your_username;'
+            f'PWD={db_config["PASS"]};'
         )
         logging.info("Successfully connected to sql server.")
         cur = conn.cursor()
