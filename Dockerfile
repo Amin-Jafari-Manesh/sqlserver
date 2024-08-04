@@ -11,8 +11,7 @@ ARG UID=1000
 # from getent group docker
 ARG GID=1000
 
-RUN apt-get update && apt-get install -y --no-install-recommends gcc
-RUN apt-get install -y --no-install-recommends default-libmysqlclient-dev 
+RUN apt-get update && apt-get install -y --no-install-recommends gcc unixodbc-dev g++ && rm -rf /var/lib/apt/lists/*
 
 RUN groupadd -g $GID -o app && \
     useradd -g $GID -u $UID -mr -d /home/app -o -s /bin/bash app
