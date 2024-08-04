@@ -48,9 +48,6 @@ COPY --chown=app:app ./requirements.txt .
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir --upgrade -r requirements.txt
 
-# Copy entrypoint script
-COPY --chown=app:app ./entrypoint.sh .
-RUN chmod +x entrypoint.sh
 # Copy project files
 COPY --chown=app:app . .
 
@@ -60,4 +57,4 @@ USER app
 # Add /home/app/.local/bin to PATH
 ENV PATH "$PATH:/home/app/.local/bin"
 
-ENTRYPOINT ["/home/app/entrypoint.sh"]
+CMD ["python", "/home/app/mssql_writer.py"]

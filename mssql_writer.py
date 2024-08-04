@@ -30,13 +30,13 @@ def test_mssql_connection():
         conn = pyodbc.connect(
             f"DRIVER={{Devart ODBC Driver for SQL Server}};SERVER={db_config['DOMAIN']};DATABASE=db;Port=1433;User ID=sa;Password={db_config['PASS']}"
         )
-        logging.info("Successfully connected to MySQL")
+        logging.info("Successfully connected to sql server.")
         cur = conn.cursor()
         cur.execute("CREATE TABLE IF NOT EXISTS hashes (id serial PRIMARY KEY, hash TEXT, created_at TIMESTAMP);")
         conn.close()
         return True
     except Exception as e:
-        logging.error(f"MySQL connection failed: {e}")
+        logging.error(f"sql server connection failed: {e}")
         return False
 
 
