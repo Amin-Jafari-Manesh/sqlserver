@@ -1,0 +1,6 @@
+certifi==2024.7.4
+elastic-transport==8.13.1
+greenlet==3.0.3
+pyodbc==5.1.0
+typing_extensions==4.12.2
+urllib3==2.2.2
