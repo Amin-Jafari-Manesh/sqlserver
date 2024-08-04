@@ -47,7 +47,11 @@ def test_mssql_connection():
 def mssql_write_hash(size: int = 100) -> bool:
     if test_mssql_connection():
         conn = pyodbc.connect(
-            f"DRIVER={{Devart ODBC Driver for SQL Server}};SERVER={db_config['DOMAIN']};DATABASE=db;Port=1433;User ID=sa;Password={db_config['PASS']}"
+            'DRIVER={ODBC Driver 17 for SQL Server};'
+            f'SERVER={db_config["DOMAIN"]};'
+            'DATABASE=your_database_name;'
+            'UID=your_username;'
+            f'PWD={db_config["PASS"]};'
         )
         cur = conn.cursor()
         for _ in range(size):
