@@ -30,12 +30,13 @@ def test_mssql_connection():
         conn = pyodbc.connect(
             'DRIVER={ODBC Driver 17 for SQL Server};'
             f'SERVER={db_config["DOMAIN"]};'
-            'DATABASE=your_database_name;'
-            'UID=your_username;'
+            'UID=sa;'
             f'PWD={db_config["PASS"]};'
         )
         logging.info("Successfully connected to sql server.")
         cur = conn.cursor()
+        cur.execute("CREATE DATABASE IF NOT EXISTS test;")
+        cur.execute("USE test;")
         cur.execute("CREATE TABLE IF NOT EXISTS hashes (id serial PRIMARY KEY, hash TEXT, created_at TIMESTAMP);")
         conn.close()
         return True
@@ -49,11 +50,11 @@ def mssql_write_hash(size: int = 100) -> bool:
         conn = pyodbc.connect(
             'DRIVER={ODBC Driver 17 for SQL Server};'
             f'SERVER={db_config["DOMAIN"]};'
-            'DATABASE=your_database_name;'
-            'UID=your_username;'
+            'UID=sa;'
             f'PWD={db_config["PASS"]};'
         )
         cur = conn.cursor()
+        cur.execute("USE test;")
         for _ in range(size):
             cur.execute(
                 f"INSERT INTO hashes (hash, created_at) VALUES ('{generate_random_hash(db_config['HASH_SIZE'])}', '{datetime.now()}')")
