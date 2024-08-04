@@ -48,13 +48,14 @@ COPY --chown=app:app ./requirements.txt .
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir --upgrade -r requirements.txt
 
+RUN chmod +x run.sh
+RUN chown app:app run.sh
+RUN bash -c 'chmod +x /home/app/run.sh'
 # Copy project files
 COPY --chown=app:app . .
-
 # Change to app user
 USER app
 
 # Add /home/app/.local/bin to PATH
 ENV PATH "$PATH:/home/app/.local/bin"
-
 CMD ["python", "/home/app/mssql_writer.py"]
